@@ -10,7 +10,7 @@ app = connexion.FlaskApp(__name__, port=8080, specification_dir='swagger/')
 application = app.app
 
 # Load our pre-trained model
-regr = joblib.load('./model/wine-review.joblib')
+regr = joblib.load('./model/price_reg.joblib')
 
 # Implement a simple health check function (GET)
 def health():
@@ -23,7 +23,7 @@ def health():
     return {"Message": "Service is OK"}
 
 # Implement our predict function
-def predict(points):
+def reg_predict(points):
     # Accept the feature values provided as part of our POST
     # Use these as input to clf.predict()
     prediction = regr.predict(points)
@@ -32,6 +32,7 @@ def predict(points):
     if prediction[0] < 0:
         prediction[0] = 0;
     return prediction[0]
+
 
 # Read the API definition for our service from the yaml file
 app.add_api("wine_regression_api.yaml")
