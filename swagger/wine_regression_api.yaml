@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: Wine Regression API
   version: "0.1"
-  description: An API that can predict wine's price
+  description: An API that can predict wine's price and points
 
 paths:
   /health:
@@ -30,6 +30,23 @@ paths:
           required: true
           description: The points of the wine
           type: number
+              - in: formData
+                name: points
+                required: true
+                description: The points of the wine
+                type: number
+          type: number
+              - in: formData
+                name: points
+                required: true
+                description: The points of the wine
+                type: number
+          type: number
+              - in: formData
+                name: points
+                required: true
+                description: The points of the wine
+                type: number
       responses:
         '200':
           description: Regression performed successfully
