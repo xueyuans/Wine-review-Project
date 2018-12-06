@@ -30,6 +30,7 @@ paths:
           required: true
           description: The country of the wine
           type: string
+          enum: ["Argentina","Armenia","Australia", "Austria", "Bosnia and Herzegovina ", "Brazil","Bulgaria","Canada","Chile","China","Croatia","Cyprus","Czech Republic","Egypt","France","Georgia","Germany","Greece","Hungary","India","Israel","Italy","Lebanon","Luxembourg","Macedonia","Mexico","Moldova","Morocco","New Zealand","Peru","Portugal","Romania","Serbia","Slovakia","Slovenia","South Africa","Spain","Switzerland","Turkey","US","Ukraine","Uruguay"]
         - in: formData
           name: price
           required: true
@@ -45,6 +46,7 @@ paths:
           required: true
           description: The taster's name of the wine
           type: string
+          enum: ["Roger Voss","Michael Schachner","Kerin O’Keefe","Virginie Boone","Paul Gregutt","Matt Kettmann","Joe Czerwinski","Sean P. Sullivan","Anna Lee C. Iijima","Jim Gordon","Anne Krebiehl MW","Lauren Buzzeo","Susan Kostrzewa","Mike DeSimone","Jeff Jenssen","Alexander Peartree","Carrie Dykes","Fiona Adams","Christina Pickard"]
       responses:
         '200':
           description: Classification performed successfully

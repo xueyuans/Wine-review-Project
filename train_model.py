@@ -56,7 +56,7 @@ def GoodRating(row):
     return(val)
 
 print('Loading the wine-review dataset')
-df = pd.read_csv('C:\AI\\wine-reviews\winemag-data-130k-v2.csv', na_values="?")
+df = pd.read_csv('wine-reviews_data/winemag-data-130k-v2.csv', na_values="?")
 df = df.where(df['price'] < 1500)
 
 
