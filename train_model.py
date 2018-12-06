@@ -20,40 +20,47 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import PolynomialFeatures
 import numpy as np
 
+le_country = LabelEncoder()
+le_province = LabelEncoder()
+le_taster_name = LabelEncoder()
+
+
+def fit_country(df):
+        le_country.fit(df['country'])
+
+def fit_province(df):
+        le_province.fit(df['province'])
+
 def encodeStr(df):
     # use the LabelEncoder function to convert the country to corresponding integers.
-    le_country = LabelEncoder()
-    le_country.fit(df['country'])
+    fit_country(df)
     df['country']= le_country.transform(df['country'])
 
     # use the LabelEncoder function to convert the province to corresponding integers.
-    le_province = LabelEncoder()
-    le_province.fit(df['province'])
+    fit_province(df)
     df['province']= le_province.transform(df['province'])
 
     # use the LabelEncoder function to convert the taster_name to corresponding integers.
-    le_taster_name = LabelEncoder()
     le_taster_name.fit(df['taster_name'])
     df['taster_name']= le_taster_name.transform(df['taster_name'])
 
     return df
 
 def GoodRating(row):
-    if row['points'] > 90:
-        val = 1
-    elif row['points'] > 85:
+    if row['points'] >= 92:
+        val = 3
+    elif row['points'] >= 86 and row['points'] < 92:
         val = 2
     else:
-        val = 3
+        val = 1
     return(val)
 
 print('Loading the wine-review dataset')
 df = pd.read_csv('C:\AI\\wine-reviews\winemag-data-130k-v2.csv', na_values="?")
-data = df[["points", "price"]]
 df = df.where(df['price'] < 1500)
 
 
-df = df.drop(['Unnamed: 0','taster_twitter_handle','title','region_2','description'],1)
+df = df.drop(['Unnamed: 0','description','taster_twitter_handle','title','region_1', 'region_2','designation','variety','winery'],1)
 df = df.dropna()
 df = encodeStr(df)
 

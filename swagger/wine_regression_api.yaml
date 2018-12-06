@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: Wine Regression API
   version: "0.1"
-  description: An API that can predict wine's price and points
+  description: An API that can predict wine's price
 
 paths:
   /health:
@@ -19,7 +19,7 @@ paths:
   /predict:
     post:
       summary: Entrypoint to our prediction function
-      operationId: wine_regression_api.predict
+      operationId: wine_regression_api.reg_predict
       consumes:
       - multipart/form-data
       produces:
@@ -30,23 +30,21 @@ paths:
           required: true
           description: The points of the wine
           type: number
-              - in: formData
-                name: points
-                required: true
-                description: The points of the wine
-                type: number
-          type: number
-              - in: formData
-                name: points
-                required: true
-                description: The points of the wine
-                type: number
-          type: number
-              - in: formData
-                name: points
-                required: true
-                description: The points of the wine
-                type: number
+        - in: formData
+          name: country
+          required: true
+          description: The country of the wine
+          type: string
+        - in: formData
+          name: province
+          required: true
+          description: The province of the wine
+          type: string
+        - in: formData
+          name: taster_name
+          required: true
+          description: The taster's name of the wine
+          type: string
       responses:
         '200':
           description: Regression performed successfully
