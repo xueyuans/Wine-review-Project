@@ -5,11 +5,9 @@ To train this model, in your terminal:
 
 from sklearn.externals import joblib
 import pandas as pd
-from sklearn.metrics import r2_score
 from sklearn import linear_model
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score
 from sklearn import linear_model
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -24,20 +22,13 @@ le_country = LabelEncoder()
 le_province = LabelEncoder()
 le_taster_name = LabelEncoder()
 
-
-def fit_country(df):
-        le_country.fit(df['country'])
-
-def fit_province(df):
-        le_province.fit(df['province'])
-
 def encodeStr(df):
     # use the LabelEncoder function to convert the country to corresponding integers.
-    fit_country(df)
+    le_country.fit(df['country'])
     df['country']= le_country.transform(df['country'])
 
     # use the LabelEncoder function to convert the province to corresponding integers.
-    fit_province(df)
+    le_province.fit(df['province'])
     df['province']= le_province.transform(df['province'])
 
     # use the LabelEncoder function to convert the taster_name to corresponding integers.
@@ -58,7 +49,6 @@ def GoodRating(row):
 print('Loading the wine-review dataset')
 df = pd.read_csv('wine-reviews_data/winemag-data-130k-v2.csv', na_values="?")
 df = df.where(df['price'] < 1500)
-
 
 df = df.drop(['Unnamed: 0','description','taster_twitter_handle','title','region_1', 'region_2','designation','variety','winery'],1)
 df = df.dropna()
@@ -85,6 +75,22 @@ y1 = df['good']
 X_train1, X_test1, y_train1, y_test1 = train_test_split(X1, y1, test_size=0.3, random_state=42)
 
 print('Training RandomForestClassifier')
-clf = RandomForestClassifier()
-clf.fit(X_train1, y_train1)
-joblib.dump(clf, 'model/points_clf.joblib')
+clf_rfc = RandomForestClassifier()
+clf_rfc.fit(X_train1, y_train1)
+joblib.dump(clf_rfc, 'model/points_clf_RandomForestClassifier.joblib')
+
+print('Training KNeighborsClassifier')
+clf_kc = KNeighborsClassifier(3, weights='uniform', p=2, metric='euclidean')
+clf_kc.fit(X_train1, y_train1)
+joblib.dump(clf_kc, 'model/points_clf_KNeighborsClassifier.joblib')
+
+print('Training DecisionTreeClassifier')
+clf_dtc = DecisionTreeClassifier()
+clf_dtc.fit(X_train1, y_train1)
+joblib.dump(clf_dtc, 'model/points_clf_DecisionTreeClassifier.joblib')
+
+
+print('Training GaussianNB')
+clf_gNB = GaussianNB()
+clf_gNB.fit(X_train1, y_train1)
+joblib.dump(clf_gNB, 'model/points_clf_GaussianNB.joblib')

@@ -13,20 +13,23 @@ app = connexion.FlaskApp(__name__, port=8080, specification_dir='swagger/')
 application = app.app
 
 # Load our pre-trained model
-clf = joblib.load('./model/points_clf.joblib')
+clf_rfc = joblib.load('./model/points_clf_RandomForestClassifier.joblib')
+clf_kc = joblib.load('./model/points_clf_KNeighborsClassifier.joblib')
+clf_dtc = joblib.load('./model/points_clf_DecisionTreeClassifier.joblib')
+clf_gNB = joblib.load('./model/points_clf_GaussianNB.joblib')
 
 # Implement a simple health check function (GET)
 def health():
     # Test to make sure our service is actually healthy
     try:
-        clf_predict('US','Oregon',14, 'Paul Gregutt')
+        clf_predict('RandomForestClassifier', 'US','Oregon',14, 'Paul Gregutt')
     except:
         return {"Message": "Service is unhealthy"}, 500
 
     return {"Message": "Service is OK"}
 
 # Implement our predict function
-def clf_predict(country, province, price, taster_name):
+def clf_predict(model, country, province, price, taster_name):
     # Accept the feature values provided as part of our POST
     # Use these as input to clf.predict()
     countrys = []
@@ -47,7 +50,16 @@ def clf_predict(country, province, price, taster_name):
     row_data[0].append(province[0])
     row_data[0].append(taster_name[0])
 
-    prediction = clf.predict(row_data)
+    prediction = []
+    if model == "RandomForestClassifier":
+        prediction = clf_rfc.predict(row_data);
+    elif  model == "KNeighborsClassifier":
+        prediction = clf_kc.predict(row_data);
+    elif model == "DecisionTreeClassifier":
+        prediction = clf_dtc.predict(row_data);
+    else:
+        prediction = clf_gNB.predict(row_data);
+
     if prediction[0] == 3:
         predicted_class = "excellent"
     elif prediction[0] == 2:

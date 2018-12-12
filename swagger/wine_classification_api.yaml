@@ -26,6 +26,12 @@ paths:
       - application/json
       parameters:
         - in: formData
+          name: model
+          required: true
+          description: The type of model
+          type: string
+          enum: ["RandomForestClassifier", "KNeighborsClassifier", "DecisionTreeClassifier","GaussianNB"]
+        - in: formData
           name: country
           required: true
           description: The country of the wine
