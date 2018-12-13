@@ -1,0 +1,60 @@
+swagger: '2.0'
+info:
+  title: Wine Classification API
+  version: "0.1"
+  description: An API that can predict wine's grade ()
+
+paths:
+  /health:
+    get:
+      summary: Checks the health of the service
+      description: Returns the health status of the service
+      operationId: wine_classification_description2_api.health
+      responses:
+        '200':
+          description: Service is healthy
+        '500':
+          description: Service is unhealthy
+
+  /predict:
+    post:
+      summary: Entrypoint to our prediction function
+      operationId: wine_classification_description2_api.clf_predict
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: model
+          required: true
+          description: The type of model
+          type: string
+          enum: ["RandomForestClassifier", "KNeighborsClassifier", "DecisionTreeClassifier","GaussianNB"]
+        - in: formData
+          name: country
+          required: true
+          description: The country of the wine
+          type: string
+          enum: ["Argentina","Armenia","Australia", "Austria", "Bosnia and Herzegovina ", "Brazil","Bulgaria","Canada","Chile","China","Croatia","Cyprus","Czech Republic","Egypt","France","Georgia","Germany","Greece","Hungary","India","Israel","Italy","Lebanon","Luxembourg","Macedonia","Mexico","Moldova","Morocco","New Zealand","Peru","Portugal","Romania","Serbia","Slovakia","Slovenia","South Africa","Spain","Switzerland","Turkey","US","Ukraine","Uruguay"]
+        - in: formData
+          name: price
+          required: true
+          description: The price of the wine
+          type: number
+        - in: formData
+          name: description
+          required: true
+          description: The description of the wine
+          type: string
+        - in: formData
+          name: taster_name
+          required: true
+          description: The taster's name of the wine
+          type: string
+          enum: ["Roger Voss","Michael Schachner","Kerin O’Keefe","Virginie Boone","Paul Gregutt","Matt Kettmann","Joe Czerwinski","Sean P. Sullivan","Anna Lee C. Iijima","Jim Gordon","Anne Krebiehl MW","Lauren Buzzeo","Susan Kostrzewa","Mike DeSimone","Jeff Jenssen","Alexander Peartree","Carrie Dykes","Fiona Adams","Christina Pickard"]
+      responses:
+        '200':
+          description: Classification performed successfully
+        '500':
+          description: Unable to perform the Classification
