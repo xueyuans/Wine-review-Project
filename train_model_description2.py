@@ -18,17 +18,17 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import PolynomialFeatures
 import numpy as np
 
-le_country = LabelEncoder()
-le_taster_name = LabelEncoder()
+le_country2 = LabelEncoder()
+le_taster_name2 = LabelEncoder()
 
 def encodeStr(df):
     # use the LabelEncoder function to convert the country to corresponding integers.
-    le_country.fit(df['country'])
-    df['country']= le_country.transform(df['country'])
+    le_country2.fit(df['country'])
+    df['country']= le_country2.transform(df['country'])
 
     # use the LabelEncoder function to convert the taster_name to corresponding integers.
-    le_taster_name.fit(df['taster_name'])
-    df['taster_name']= le_taster_name.transform(df['taster_name'])
+    le_taster_name2.fit(df['taster_name'])
+    df['taster_name']= le_taster_name2.transform(df['taster_name'])
 
     return df
 

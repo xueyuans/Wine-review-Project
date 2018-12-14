@@ -46,6 +46,7 @@ def GoodRating(row):
         val = 1
     return(val)
 
+# Train models for prect1
 print('Loading the wine-review dataset')
 df = pd.read_csv('wine-reviews_data/winemag-data-130k-v2.csv', na_values="?")
 df = df.where(df['price'] < 1500)
