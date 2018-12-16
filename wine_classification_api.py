@@ -37,7 +37,7 @@ def health():
         clf_predict1('RandomForestClassifier', 'US','Oregon',14, 'Paul Gregutt')
         clf_predict2('RandomForestClassifier', 'US',14, 'Paul Gregutt','Aromas include tropical fruit, broom, brimstone and dried herb')
         clf_predict3("Aromas include tropical fruit, broom, brimstone and dried herb.")
-        clf_predict4(87)
+        clf_predict4('US', 87)
     except:
         return {"Message": "Service is unhealthy"}, 500
 
